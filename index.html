@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        .register-box h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #667eea;
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #888;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-box">
+        <h2>用户注册</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名">
+                <div class="error-msg" id="usernameError">用户名至少2个字符</div>
+            </div>
+
+            <div class="form-group">
+                <label>邮箱</label>
+                <input type="email" id="email" placeholder="请输入邮箱">
+                <div class="error-msg" id="emailError">请输入正确的邮箱格式</div>
+            </div>
+
+            <div class="form-group">
+                <label>密码</label>
+                <input type="password" id="password" placeholder="请输入密码（至少6位）">
+                <div class="error-msg" id="passwordError">密码至少6位</div>
+            </div>
+
+            <div class="form-group">
+                <label>确认密码</label>
+                <input type="password" id="confirmPassword" placeholder="请再次输入密码">
+                <div class="error-msg" id="confirmError">两次密码不一致</div>
+            </div>
+
+            <button type="submit">注 册</button>
+
+            <div class="login-link">
+                已有账号？<a href="#">立即登录</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+
+        function showError(id, show) {
+            document.getElementById(id).style.display = show ? 'block' : 'none';
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            let valid = true;
+
+            // 验证用户名
+            if (username.length < 2) {
+                showError('usernameError', true);
+                valid = false;
+            } else {
+                showError('usernameError', false);
+            }
+
+            // 验证邮箱
+            const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailReg.test(email)) {
+                showError('emailError', true);
+                valid = false;
+            } else {
+                showError('emailError', false);
+            }
+
+            // 验证密码
+            if (password.length < 6) {
+                showError('passwordError', true);
+                valid = false;
+            } else {
+                showError('passwordError', false);
+            }
+
+            // 验证确认密码
+            if (password !== confirmPassword) {
+                showError('confirmError', true);
+                valid = false;
+            } else {
+                showError('confirmError', false);
+            }
+
+            if (valid) {
+                alert('注册成功！');
+            }
+        });
+    </script>
+</body>
+
+</html>
